@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfActuateImplement" Id="{4d7328d8-3b44-4eaa-9d67-afb443720a15}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfActuateImplement IMPLEMENTS itfActuate
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Coil : BOOL;
+	Start : BOOL;
+	Stop : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mTurnOffAuto" Id="{087a05d9-5fcf-4297-8901-68efe5cafd20}">
+      <Declaration><![CDATA[METHOD mTurnOffAuto : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pCoil := FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mTurnOffManual" Id="{ae7a5c7e-ea8e-45e0-a23a-e6cfff4cb6dc}">
+      <Declaration><![CDATA[METHOD mTurnOffManual : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pStop THEN
+	pCoil := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mTurnOnAuto" Id="{a45a887d-576a-4814-bca3-59e562303638}">
+      <Declaration><![CDATA[METHOD mTurnOnAuto : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pCoil := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mTurnOnManual" Id="{e3a9afca-1987-4adc-bc9c-5b4a3a284bd9}">
+      <Declaration><![CDATA[METHOD mTurnOnManual : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pStart THEN
+	pCoil := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="pCoil" Id="{71dc4a1c-77f9-4779-8a10-3067f0bfdeb2}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pCoil : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{cf344ada-8149-4500-a4ce-70e5a59d4d98}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pCoil := Coil;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{92fa19e0-25fb-4d4d-a1ca-c2bfe4e65dd3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Coil := pCoil;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pStart" Id="{96485657-947a-454e-9b9a-4d743bf29bd7}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pStart : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{a8fd7b80-cdf8-417e-a7ed-e77ce1083422}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pStart := Start;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8c6ec1a3-e800-49ea-ac50-f83ffb54f3cf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Start := pStart;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pStop" Id="{92623c80-c715-454b-8df9-7f90e95cadc3}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pStop : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{37994735-10c3-42a3-9bf8-cd68e1304c71}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pStop := Stop;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a7af93fc-9977-4c1f-93ed-e72e09528fd7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Stop := pStop;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfActuateImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.mTurnOffAuto">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.mTurnOffManual">
+      <LineId Id="4" Count="2" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.mTurnOnAuto">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.mTurnOnManual">
+      <LineId Id="4" Count="2" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.pCoil.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.pCoil.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.pStart.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.pStart.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.pStop.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfActuateImplement.pStop.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

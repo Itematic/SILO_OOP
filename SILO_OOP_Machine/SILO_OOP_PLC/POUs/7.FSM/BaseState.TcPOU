@@ -1,0 +1,92 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="BaseState" Id="{2b11ec1c-7853-4863-bf5c-bd9acf84bec2}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BaseState IMPLEMENTS itfState
+VAR_INPUT
+	BasePointer : POINTER TO WRAPPER;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	StateTimer : TON;
+	Index : INT;
+	TESTING : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="FB_INIT" Id="{529836ac-3a75-43d8-b9ff-70a071d414a1}">
+      <Declaration><![CDATA[METHOD FB_INIT : BOOL
+VAR_INPUT
+	bInitRetains : BOOL;
+	bInCopyCode : BOOL;
+	WrapperPointer : POINTER TO Wrapper;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[BasePointer := WrapperPointer;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mCheckDosing" Id="{e93c066a-1ad2-4525-a6e4-24a2d19d5695}">
+      <Declaration><![CDATA[METHOD PROTECTED mCheckDosing : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX :=1 TO BasePointer^.pNUM_SILOS BY 1 DO
+	IF BasePointer^.SpiralAccessI[INDEX].mRunning() THEN
+		RETURN;
+	END_IF
+END_FOR
+
+mCheckDosing := TRUE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mIrun" Id="{9c8d0b80-7873-4ac4-b5d7-be821cca1725}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mNextState" Id="{dfaa6ff3-2f6a-45d4-b276-b711de275c3b}">
+      <Declaration><![CDATA[METHOD mNextState : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[StateTimer(IN:= TRUE, PT:= T#1000MS);
+
+IF StateTimer.Q THEN
+BasePointer^.pStateIndex := BasePointer^.pStateIndex + 1;
+StateTimer(IN:= FALSE);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="BaseState">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="BaseState.FB_INIT">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="BaseState.mCheckDosing">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+    <LineIds Name="BaseState.mIrun">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="BaseState.mNextState">
+      <LineId Id="6" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

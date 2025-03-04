@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfAutoManual" Id="{b2f36530-f0d8-4d3b-b92b-067f34a2e104}">
+    <Declaration><![CDATA[INTERFACE itfAutoManual
+]]></Declaration>
+    <Method Name="mAutoOff" Id="{58f1948f-8b98-4423-90fe-9664fe275be7}">
+      <Declaration><![CDATA[METHOD mAutoOff : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mAutoOn" Id="{bcdee737-f7f3-467a-a5a4-09ca5a410a5d}">
+      <Declaration><![CDATA[METHOD mAutoOn : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mFault" Id="{c8fa4e52-e766-484d-8066-f26a7938ddb9}">
+      <Declaration><![CDATA[METHOD mFault : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mManual" Id="{2ecbe8c4-fa06-4737-b649-ab0748812381}">
+      <Declaration><![CDATA[METHOD mManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mRunning" Id="{c2953d72-b0ac-47a7-93af-fea729a9a0b3}">
+      <Declaration><![CDATA[METHOD mRunning : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Motor" Id="{3cbfe4dd-9e30-4896-a5f5-8ef056504abb}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Motor IMPLEMENTS itfAutoManual
+VAR_INPUT
+	MotorInput : MotorI;
+END_VAR
+VAR_OUTPUT
+	MotorOutput : MotorO;
+END_VAR
+VAR
+	Actuate : itfActuate;
+	Fault : itfFault;
+	
+	ActuateComp : itfActuateImplement;
+	FaultComp : itfFaultImplement;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Map();
+FaultHandler();]]></ST>
+    </Implementation>
+    <Method Name="FaultHandler" Id="{f393ba9e-00a6-4f68-aa72-1db891210240}">
+      <Declaration><![CDATA[METHOD PROTECTED FaultHandler : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Fault.mResetFault();
+Fault.mSetFault();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="Map" Id="{86d08d12-b511-4f03-a9cb-b78cff376b33}">
+      <Declaration><![CDATA[METHOD PRIVATE Map : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Actuate := ActuateComp;
+Fault := FaultComp;
+
+Actuate.pStart := MotorInput.Start;
+Actuate.pStop := MotorInput.Stop;
+MotorOutput.Coil := Actuate.pCoil;
+MotorOutput.FaultStatus := Fault.pFaultStatus;
+
+Fault.pResetButton := MotorInput.ResetOverload;
+Fault.pFault := MotorInput.Overload;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mAutoOff" Id="{4d3edd47-c467-48f4-8a9f-cee0adb9c444}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mAutoOff : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Actuate.mTurnOffAuto();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mAutoOn" Id="{ebfc1c94-d6b8-4a45-9091-987d607a6613}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mAutoOn : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF mFault() = FALSE THEN
+Actuate.mTurnOnAuto();
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mFault" Id="{5a3c9ec4-5a53-42ac-9e00-7832b09da4d8}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mFault : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mFault := Fault.pFaultStatus;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mManual" Id="{9c5b2efa-38a4-4abd-88a7-77a9dc2fa2e1}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mManual : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF mFault() = FALSE THEN
+Actuate.mTurnOnManual();
+END_IF
+Actuate.mTurnOffManual();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mRunning" Id="{b523a23e-6d71-4392-8359-8585efa9b969}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mRunning : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mRunning := Actuate.pCoil;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Motor">
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.FaultHandler">
+      <LineId Id="5" Count="1" />
+    </LineIds>
+    <LineIds Name="Motor.Map">
+      <LineId Id="6" Count="1" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="12" Count="1" />
+    </LineIds>
+    <LineIds Name="Motor.mAutoOff">
+      <LineId Id="4" Count="1" />
+    </LineIds>
+    <LineIds Name="Motor.mAutoOn">
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.mFault">
+      <LineId Id="4" Count="1" />
+    </LineIds>
+    <LineIds Name="Motor.mManual">
+      <LineId Id="4" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="Motor.mRunning">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

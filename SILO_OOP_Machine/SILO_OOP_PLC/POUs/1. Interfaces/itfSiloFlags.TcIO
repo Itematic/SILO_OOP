@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfSiloFlags" Id="{f0e8f7a6-5b0c-4c89-a996-d302bb33acab}">
+    <Declaration><![CDATA[INTERFACE itfSiloFlags
+]]></Declaration>
+    <Property Name="pBufferedWeight" Id="{1c01fffc-a50b-4524-b76f-77187396020d}">
+      <Declaration><![CDATA[PROPERTY pBufferedWeight : INT]]></Declaration>
+      <Get Name="Get" Id="{d720b0b4-8384-4260-80aa-e74116bdc981}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{caabe211-3b9f-4074-9209-1d88359d61d3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pLowProduct" Id="{e5af26a5-7d76-4e46-b34c-9351d2430ed7}">
+      <Declaration><![CDATA[PROPERTY pLowProduct : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9cff8734-c7f1-4ab9-83a9-6070a289d53a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{65d36caa-12e0-40f1-a49d-a45852604914}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pTargetWeight" Id="{cfdc5047-153d-40cc-b345-266adbe63408}">
+      <Declaration><![CDATA[PROPERTY pTargetWeight : INT]]></Declaration>
+      <Get Name="Get" Id="{5304fe68-75b8-4524-8d7f-2e0ee7ebe01d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{7747aad6-5d21-40b6-bbe9-a1fffb871bd1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

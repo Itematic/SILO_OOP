@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfScaleAnalogOutputImplement" Id="{0baff21a-3862-4853-9d3f-1bc9f74a7499}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfScaleAnalogOutputImplement EXTENDS itfScaleAnalogInputImplement
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mScale" Id="{ba3ea907-ba65-4be2-9d71-8a3ab086a4b8}">
+      <Declaration><![CDATA[METHOD mScale : INT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pScaledSignal := pAnalogSignal * pMaxSignalValue;
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="itfScaleAnalogOutputImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogOutputImplement.mScale">
+      <LineId Id="3" Count="1" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

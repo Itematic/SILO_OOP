@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfState" Id="{3054d783-1d82-43fb-9501-0cc705668aab}">
+    <Declaration><![CDATA[INTERFACE itfState
+]]></Declaration>
+    <Method Name="mIrun" Id="{b4a704ac-c5b2-46ad-90de-5b8530b3961a}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

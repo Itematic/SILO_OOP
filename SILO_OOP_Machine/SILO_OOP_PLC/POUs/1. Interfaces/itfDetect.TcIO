@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfDetect" Id="{708b1dff-bdc8-4e79-bc34-4b561f8c1fcb}">
+    <Declaration><![CDATA[INTERFACE itfDetect
+]]></Declaration>
+    <Property Name="pDetectSignal" Id="{49f8113c-e4d4-4f1b-8a62-312c2136cc10}">
+      <Declaration><![CDATA[PROPERTY pDetectSignal : BOOL]]></Declaration>
+      <Get Name="Get" Id="{9a8a69e0-a62c-48ac-87dc-71ffead1bd87}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{e67219b9-137c-4820-93f0-b3c172fb3f50}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,98 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Gate" Id="{704da9fa-6781-4768-a110-21002bb7eecc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Gate Implements itfAutoManual
+VAR_INPUT
+	GateInput : GateI;
+END_VAR
+VAR_OUTPUT
+	GateOutput : GateO;
+END_VAR
+VAR
+Actuate : itfActuate;
+ActuateComp : itfActuateImplement;	
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Map();]]></ST>
+    </Implementation>
+    <Method Name="Map" Id="{64ffc566-33e0-413c-9a01-caec3ef8c01d}">
+      <Declaration><![CDATA[METHOD PRIVATE Map : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Actuate := ActuateComp;
+
+Actuate.pStart := GateInput.Open;
+Actuate.pStop := GateInput.Close;
+GateOutput.Coil := Actuate.pCoil;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mAutoOff" Id="{4903f606-3d6d-4c13-b763-581cb21c69f2}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mAutoOff : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Actuate.mTurnOffAuto();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mAutoOn" Id="{eeef2779-bbe0-4491-9ad7-6f146cc323cf}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mAutoOn : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Actuate.mTurnOnAuto();
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mFault" Id="{8cf7b193-0bc2-4f0e-8197-f4b484b71478}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mFault : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mManual" Id="{d447e9aa-eac8-4621-bd60-518199c8c6be}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mManual : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Actuate.mTurnOnManual();
+Actuate.mTurnOffManual();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mRunning" Id="{e78dcd01-4b36-4027-8107-7a6c22109049}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mRunning : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mRunning := Actuate.pCoil;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Gate">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Gate.Map">
+      <LineId Id="6" Count="3" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Gate.mAutoOff">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="Gate.mAutoOn">
+      <LineId Id="4" Count="1" />
+    </LineIds>
+    <LineIds Name="Gate.mFault">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="Gate.mManual">
+      <LineId Id="4" Count="1" />
+    </LineIds>
+    <LineIds Name="Gate.mRunning">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

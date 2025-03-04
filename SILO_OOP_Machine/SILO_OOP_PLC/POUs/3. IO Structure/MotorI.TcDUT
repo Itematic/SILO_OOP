@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="MotorI" Id="{9ab7ac65-9eff-405d-af25-e0d1d99f28e5}">
+    <Declaration><![CDATA[TYPE MotorI :
+STRUCT
+	Start : BOOL;
+	Stop : BOOL;
+	Overload : BOOL;
+	ResetOverload: BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

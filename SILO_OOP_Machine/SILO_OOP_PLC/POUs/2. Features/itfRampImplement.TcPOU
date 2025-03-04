@@ -1,0 +1,243 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfRampImplement" Id="{595e310e-b0c8-4980-921f-214373609f3e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfRampImplement IMPLEMENTS itfRamp
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	OutputValue : INT;
+	RampDone : BOOL;
+	RampRate : INT;
+	TargetFreq : INT;
+	PulsePeriod : INT;
+	Timer : TON;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mDoneTargetFreq" Id="{81acbe68-1b98-4ba5-a8e6-58e4f7c79595}">
+      <Declaration><![CDATA[METHOD mDoneTargetFreq : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pOutputValue >= pTargetFreq THEN
+	pRampDone := TRUE;
+	ELSE
+		pRampDone := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mRampDown" Id="{cf4d1c2a-8557-44d9-a779-c89f9a9ffed8}">
+      <Declaration><![CDATA[METHOD mRampDown : INT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mTimerScale();
+mDoneTargetFreq();
+
+IF TIMER.Q THEN
+	IF pOutputValue > 0 THEN
+pOutputValue := pOutputValue - 1;
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mRampUp" Id="{bbf02685-e48d-463f-9a3f-fbba743822b2}">
+      <Declaration><![CDATA[METHOD mRampUp : INT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mTimerScale();
+mDoneTargetFreq();
+
+IF TIMER.Q THEN
+	IF pOutputValue < pTargetFreq THEN
+pOutputValue := pOutputValue + 1;
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mTimerScale" Id="{ea2a2985-6179-48b4-bb75-47f457a03ec5}">
+      <Declaration><![CDATA[METHOD mTimerScale : INT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pPulsePeriod := (pRampRate * 1000) / TargetFreq;
+
+TIMER(IN:= NOT TIMER.Q, PT:= INT_TO_TIME(pPulsePeriod));]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="pOutputValue" Id="{96e85b45-f133-4a06-b7c3-5d2e77884a5e}">
+      <Declaration><![CDATA[PROPERTY pOutputValue : INT
+]]></Declaration>
+      <Get Name="Get" Id="{a25bcb58-8011-4d25-9371-209fa84788f7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pOutputValue := OutputValue;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8c416970-e9e1-4044-812c-cc5a63db155d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[OutputValue := pOutputValue;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pPulsePeriod" Id="{f7552bfd-08e0-4f8e-ace6-d268ef126ce1}">
+      <Declaration><![CDATA[PROPERTY pPulsePeriod : INT
+]]></Declaration>
+      <Get Name="Get" Id="{fcfd2e89-98e0-455f-8cd1-c536ab42e0d4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pPulsePeriod := PulsePeriod;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9bdebe48-0215-4c02-be41-98d60d173ed0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[PulsePeriod := pPulsePeriod;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pRampDone" Id="{cab89f5d-d190-4d69-8e64-5c87cac2d44a}">
+      <Declaration><![CDATA[PROPERTY pRampDone : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{94942c35-6010-48a8-a51a-b41667e52cad}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pRampDone := RampDone;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{b8f72e14-90bc-49fe-8ee0-27045e62f355}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RampDone := pRampDone;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pRampRate" Id="{2f5a2c69-d94c-4566-8b9f-331af3018a61}">
+      <Declaration><![CDATA[PROPERTY pRampRate : INT
+]]></Declaration>
+      <Get Name="Get" Id="{89dc5717-c7bb-4357-b1ae-4457a4f2d1f3}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pRampRate := RampRate;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5282d2c2-5bdf-4bb3-8aab-6d5b15f040eb}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[RampRate := pRampRate;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pTargetFreq" Id="{612859f9-8eef-4225-8ea4-2a74f9badd9a}">
+      <Declaration><![CDATA[PROPERTY pTargetFreq : INT
+]]></Declaration>
+      <Get Name="Get" Id="{103237b5-eb27-4653-b1f8-98e1d4337996}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF TargetFreq > 0 THEN
+pTargetFreq := TargetFreq;
+ELSE
+	pTargetFreq := 1;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8d4b36d9-c5e2-479c-892a-d5adb74a1d3c}">
+        <Declaration><![CDATA[VAR
+	END_IFTargetFreq: INT;
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF pTargetFreq > 0 THEN
+TargetFreq := pTargetFreq;
+ELSE
+	TargetFreq := 1;
+END_IF
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfRampImplement">
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.mDoneTargetFreq">
+      <LineId Id="5" Count="3" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.mRampDown">
+      <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="6" Count="3" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.mRampUp">
+      <LineId Id="12" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.mTimerScale">
+      <LineId Id="5" Count="1" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pOutputValue.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pOutputValue.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pPulsePeriod.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pPulsePeriod.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pRampDone.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pRampDone.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pRampRate.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pRampRate.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pTargetFreq.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="3" />
+    </LineIds>
+    <LineIds Name="itfRampImplement.pTargetFreq.Set">
+      <LineId Id="5" Count="3" />
+      <LineId Id="2" Count="0" />
+      <LineId Id="10" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

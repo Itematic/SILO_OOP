@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfStatusFlags" Id="{5400ab44-ec83-4c4b-85ed-9950e264603c}">
+    <Declaration><![CDATA[INTERFACE itfStatusFlags
+]]></Declaration>
+    <Property Name="pBuffering" Id="{60a04fab-75d3-4bc3-a2f0-51ddbdc8b959}">
+      <Declaration><![CDATA[PROPERTY pBuffering : BOOL]]></Declaration>
+      <Get Name="Get" Id="{34e3a455-f104-4a4e-8a2a-db35c0761a9a}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{bdbf4bd5-a1b7-4f24-8cd2-430b2e7c679d}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pDosing" Id="{3174992c-cecc-492d-abc3-b4b3b5bd448d}">
+      <Declaration><![CDATA[PROPERTY pDosing : BOOL]]></Declaration>
+      <Get Name="Get" Id="{4841e78a-ea72-49aa-88d5-eb871677be7b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{c7d29b9f-f7d7-4918-b774-9aff2cf74d84}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pFault" Id="{1c04828f-8294-45c5-9d5e-dc58853156bd}">
+      <Declaration><![CDATA[PROPERTY pFault : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b6309bd3-f155-429b-b90b-f446d9c744be}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b7dda360-9fe0-477e-8428-184df8c8989f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pHaltBatch" Id="{6a0e6a06-6288-47c2-ae87-fb91283eb286}">
+      <Declaration><![CDATA[PROPERTY pHaltBatch : BOOL]]></Declaration>
+      <Get Name="Get" Id="{20eb6b27-52bb-458b-b248-7ed115a8d69e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{88282263-693d-4131-a09c-312d5ef4a479}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pLowProduct" Id="{ae3377fa-d71a-4c09-ab8c-999fbdc66a51}">
+      <Declaration><![CDATA[PROPERTY pLowProduct : BOOL]]></Declaration>
+      <Get Name="Get" Id="{b6c12e94-7b20-4366-bb73-ff05db81e7c2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b3de28e5-accc-4a7b-8f0d-24070e1091eb}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pMixing" Id="{1c7d3f8a-656d-47ed-8c6c-8d412d104db6}">
+      <Declaration><![CDATA[PROPERTY pMixing : BOOL]]></Declaration>
+      <Get Name="Get" Id="{2f852e38-7399-4594-a53c-4641dd7f0aa8}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{a4e9ec5f-8b5d-4c66-9d8c-43a4fa47bdc0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pStoring" Id="{8485a48b-b19a-4727-87e0-e8dfbf54f1ad}">
+      <Declaration><![CDATA[PROPERTY pStoring : BOOL]]></Declaration>
+      <Get Name="Get" Id="{fa9b4529-9ef7-43b0-a7eb-88f1e3e4c35e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{61630e9c-6cb1-4054-afda-c477b47975ef}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

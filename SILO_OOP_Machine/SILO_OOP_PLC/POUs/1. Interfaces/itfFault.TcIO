@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfFault" Id="{4e737285-bd16-49a6-b68d-92a36c679a54}">
+    <Declaration><![CDATA[INTERFACE itfFault
+]]></Declaration>
+    <Method Name="mResetFault" Id="{da1066ea-dba9-4660-9d3b-4e357ea0a7cc}">
+      <Declaration><![CDATA[METHOD mResetFault : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mSetFault" Id="{6c7a6526-5a04-4c50-8a84-8b2f3581f2c0}">
+      <Declaration><![CDATA[METHOD mSetFault : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="pFault" Id="{62823e24-0ca6-4da2-8ba6-4a5fee85736a}">
+      <Declaration><![CDATA[PROPERTY pFault : Bool]]></Declaration>
+      <Get Name="Get" Id="{d1688689-02ad-4771-9be3-6b173b58f6ee}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{37142f89-d0da-44ec-a88d-6c793aa89fc5}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pFaultStatus" Id="{bd8cce7c-95d4-4838-9a36-ebe8f3175a34}">
+      <Declaration><![CDATA[PROPERTY pFaultStatus : Bool]]></Declaration>
+      <Get Name="Get" Id="{87dc6f5c-65bf-42af-b9cf-1338e2ca41a9}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b051b66d-27e2-4de2-b0d8-b0ef314d18b1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pResetButton" Id="{0b1a16dc-8a84-4b4c-92b8-74453f94b1f8}">
+      <Declaration><![CDATA[PROPERTY pResetButton : BOOL]]></Declaration>
+      <Get Name="Get" Id="{cc0383d6-0e5b-4441-b42d-4d4d5cb01b14}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{d04c1f4f-4e0c-46bc-8518-c7e851718f38}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

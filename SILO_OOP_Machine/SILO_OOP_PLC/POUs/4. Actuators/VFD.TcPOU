@@ -1,0 +1,185 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="VFD" Id="{65cf7e09-36be-4f79-ada8-7d2f724d4ada}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK VFD IMPLEMENTS itfAutoManual
+VAR_INPUT
+	VFDInput : VFDI;
+END_VAR
+VAR_OUTPUT
+	VFDOutput : VFDO;
+END_VAR
+VAR
+	MotorComp : Motor;
+	MotorIref : REFERENCE TO MotorI;
+	MotorOref : REFERENCE TO MotorO;
+
+	ScaleComp : itfScaleAnalogOutputImplement;
+	Scale : itfScale;
+
+	RampComp : itfRampImplement;
+	Ramp : itfRamp;
+	
+	CoilR : R_TRIG;
+	CoilF : F_TRIG;
+	
+	FlagUp : BOOL;
+	FlagDown : BOOL;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Map();
+
+CoilR(CLK:= MotorOref.Coil);
+CoilF(CLK:= MotorOref.Coil);]]></ST>
+    </Implementation>
+    <Method Name="Map" Id="{6f960a0f-f7ad-4b89-9aeb-006fd4128c60}">
+      <Declaration><![CDATA[METHOD PRIVATE Map : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[MotorIref REF= VFDInput;
+MotorOref REF= VFDOutput;
+MotorComp(MotorInput := MotorIref, MotorOutput => MotorOref);
+
+Scale := ScaleComp;
+Ramp := RampComp;
+
+Ramp.pTargetFreq := VFDInput.InputFreq;
+Ramp.pRampRate := VFDInput.RampRate;
+
+Scale.pMaxSignalValue := VFDInput.FreqMaxSignal;
+Scale.pAnalogSignal := Ramp.pOutputValue;
+VFDOutput.OutputFreq := Scale.pScaledSignal;
+Scale.mScale();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mAutoOff" Id="{996be5e1-25a8-4124-8af7-e5c0e98b76f7}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mAutoOff : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RampFreq();
+MotorComp.mAutoOff();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mAutoOn" Id="{e1420c6f-48e5-4cc2-9621-24907e96929e}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mAutoOn : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RampFreq();
+MotorComp.mAutoOn();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mFault" Id="{c06fde52-78da-4c8a-b4af-4b11cb752da9}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mFault : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mFault := MotorComp.mFault();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mManual" Id="{d480ba3f-794a-4551-a7fa-cbf86b384f97}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mManual : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[RampFreq();
+MotorComp.mManual();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mRunning" Id="{34b66f92-d3a1-4b1d-a570-870cc696ecca}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mRunning : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mRunning := MotorComp.mRunning();]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="RampFreq" Id="{32df45e3-b7b0-4700-a55a-f26e3803b2b7}">
+      <Declaration><![CDATA[METHOD RampFreq : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF CoilR.Q THEN
+	FlagUp := TRUE;
+	// Setting Flag
+	FlagDown := FALSE;
+END_IF
+
+IF CoilF.Q THEN
+	FlagDown := TRUE;
+	// Setting Flag
+	FlagUp := FALSE;
+END_IF
+
+IF FlagUp THEN
+	//FlagDown := FALSE;
+	Ramp.mRampUp();
+	IF Ramp.pRampDone THEN
+		FlagUp := FALSE;
+	END_IF
+END_IF
+
+IF FlagDown THEN
+	//FlagUp := FALSE;
+	Ramp.mRampDown();
+	IF Ramp.pOutputValue = 0 THEN
+		FlagDown := FALSE;
+	END_IF
+END_IF
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="VFD">
+      <LineId Id="28" Count="0" />
+      <LineId Id="61" Count="0" />
+      <LineId Id="60" Count="0" />
+      <LineId Id="35" Count="0" />
+    </LineIds>
+    <LineIds Name="VFD.Map">
+      <LineId Id="6" Count="4" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="12" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="14" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="18" Count="0" />
+    </LineIds>
+    <LineIds Name="VFD.mAutoOff">
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="VFD.mAutoOn">
+      <LineId Id="4" Count="1" />
+    </LineIds>
+    <LineIds Name="VFD.mFault">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="VFD.mManual">
+      <LineId Id="4" Count="1" />
+    </LineIds>
+    <LineIds Name="VFD.mRunning">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="VFD.RampFreq">
+      <LineId Id="6" Count="1" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="8" Count="3" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="12" Count="2" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="15" Count="7" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="23" Count="2" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="26" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

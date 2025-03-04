@@ -1,0 +1,408 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Wrapper" Id="{d9679185-213f-404e-95ab-8f89d36fdcd9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Wrapper
+VAR_INPUT
+	SpiralInput : ARRAY [1..NUM_SILOS] OF VFDI;
+	LoadCellInput : ARRAY [1..NUM_SILOS] OF LoadCellI;
+	ConveyorInput : ARRAY [1..NUM_CONVEYORS] OF MotorI;
+	ElevatorInput : ARRAY [1..NUM_ELEVATORS] OF MotorI;
+	MixerInput : ARRAY [1..NUM_MIXERS] OF VFDI;
+	GateInput : ARRAY [1..NUM_GATES] OF GateI;
+	ProximityInput : ARRAY [1..NUM_PROXIMITY] OF ProxI;
+	
+	SpiralAccessI : ARRAY [1..NUM_SILOS] OF itfAutoManual;
+	ConveyorAccessI : ARRAY [1..NUM_CONVEYORS] OF itfAutoManual;
+	ElevatorAccessI : ARRAY [1..NUM_ELEVATORS] OF itfAutoManual;
+	MixerAccessI : ARRAY [1..NUM_MIXERS] OF itfAutoManual;
+	GateAccessI : ARRAY [1..NUM_GATES] OF itfAutoManual;
+	ProximityAccessI : ARRAY [1..NUM_PROXIMITY] OF itfReturnBOOL;
+	MachineFlagsAccessI : itfStatusFlags;
+	SiloFlagsAccessI : ARRAY [1..NUM_SILOS] OF itfSiloFlags;
+	
+	SuperActuator : ARRAY [1..NUM_ACTUATORS] OF itfAutoManual;	
+END_VAR
+VAR_OUTPUT
+	SpiralOutput : ARRAY [1..NUM_SILOS] OF VFDO;
+	LoadCellOutput : ARRAY [1..NUM_SILOS] OF LoadCellO;
+	ConveyorOutput : ARRAY [1..NUM_CONVEYORS] OF MotorO;
+	ElevatorOutput : ARRAY [1..NUM_ELEVATORS] OF MotorO;
+	MixerOutput : ARRAY [1..NUM_MIXERS] OF VFDO;
+	GateOutput : ARRAY [1..NUM_GATES] OF GateO;
+END_VAR
+VAR
+
+////////////////////////////////////Actuators//////////////////////////////////////////
+	Spiral : ARRAY [0..NUM_SILOS] OF VFD;
+	Conveyor : ARRAY [0..NUM_CONVEYORS] OF Motor;
+	Elevator : ARRAY [0..NUM_ELEVATORS] OF Motor;
+	Mixer : ARRAY [0..NUM_MIXERS] OF VFD;
+	Gate : ARRAY [0..NUM_SILOS] OF Gate;
+////////////////////////////////////Sensors////////////////////////////////////////////
+	LoadCell : ARRAY [0..NUM_SILOS] OF LoadCell;
+	Proximities : ARRAY [0..NUM_PROXIMITY] OF ProximitySensor;
+///////////////////////////////Machine Flags///////////////////////////////////////////
+	MachineFlags : itfStatusFlagsImplement;	
+	SiloFlags : ARRAY [0..NUM_SILOS] OF itfSiloFlagsImplement;
+	
+	INDEX : INT;
+	StateIndex : INT := 1;
+	IndependentStateIndex : INT :=1;
+//////////////////////////////////FSM///////////////////////////////////////////////////
+	Execute : ARRAY [1..NUM_STATES] OF itfState;
+	Execute_Independent : ARRAY [1..NUM_INDEPENDENT_STATES] OF itfState;
+	
+	Buffer : BufferingProduct(THIS);
+	Convey : ConveyProduct(THIS);
+	DoseInitialize : DoseInit(THIS);
+	DoseBegin : Dose(THIS);
+	Mix : Mixing (THIS);
+	GateActuate : GateHandler(THIS);
+	Guard : NewBatch(THIS);
+	Store : StorageCheck(THIS);
+	MixerCheck : MixerDepositCheck(THIS);
+//////////////////////////////Fault Handling//////////////////////////////////////////////
+	LastStatus : ARRAY[1..NUM_ACTUATORS] OF BOOL;
+	
+	FaultR : R_TRIG;
+	FaultF : F_TRIG;
+	
+END_VAR
+VAR CONSTANT
+	NUM_SILOS : INT:=2;
+	NUM_GATES : INT:=2;
+	NUM_CONVEYORS : INT:=1;
+	NUM_ELEVATORS : INT:=1;
+	NUM_PROXIMITY : INT:=4;
+	NUM_MIXERS : INT:=1;
+	
+	NUM_ACTUATORS : INT:=7;
+	
+	NUM_STATES : INT:=9;
+	NUM_INDEPENDENT_STATES : INT:=1;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Map();
+mManualMode();
+StatesMap();
+
+FaultR(CLK:=mCheckFaults());
+FaultF(CLK:=mCheckFaults());
+
+IF FaultR.Q THEN
+	mSaveActuatorsStatus();
+	mGeneralShutDown();
+END_IF
+
+IF FaultF.Q THEN
+	mRestoreStatus();
+END_IF
+
+IF mCheckFaults()=FALSE THEN
+	IF pStateIndex > NUM_STATES THEN
+		pStateIndex := 1;
+	ELSE
+		Execute[pStateIndex].mIrun();
+	END_IF
+	
+	Execute_Independent[pIndependentStateIndex].mIrun();
+END_IF]]></ST>
+    </Implementation>
+    <Method Name="Map" Id="{e4347669-8b10-4c1a-b5f4-b0dcb23b4f83}">
+      <Declaration><![CDATA[METHOD PRIVATE Map : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO NUM_SILOS BY 1 DO
+	SpiralAccessI[INDEX] := Spiral[INDEX];
+	Spiral[INDEX](VFDInput:= SpiralInput[INDEX], VFDOutput=>SpiralOutput[INDEX]);
+	
+	LoadCell[INDEX](LoadCellInput := LoadCellInput[INDEX], LoadCellOutput => LoadCellOutput[INDEX]);
+
+	SiloFlagsAccessI[INDEX] := SiloFlags[INDEX];
+END_FOR
+
+FOR INDEX:=1 TO NUM_CONVEYORS BY 1 DO
+	ConveyorAccessI[INDEX] := Conveyor[INDEX];
+	Conveyor[INDEX](MotorInput:=ConveyorInput[INDEX], MotorOutput=>ConveyorOutput[INDEX]);
+END_FOR
+
+FOR INDEX:=1 TO NUM_ELEVATORS BY 1 DO
+	ElevatorAccessI[INDEX] := Elevator[INDEX];
+	Elevator[INDEX](MotorInput:=ElevatorInput[INDEX], MotorOutput=>ElevatorOutput[INDEX]);
+END_FOR
+
+FOR INDEX:=1 TO NUM_MIXERS BY 1 DO
+	MixerAccessI[INDEX] := Mixer[INDEX];
+	Mixer[INDEX](VFDInput:=MixerInput[INDEX], VFDOutput=>MixerOutput[INDEX]);
+END_FOR
+
+FOR INDEX:=1 TO NUM_GATES BY 1 DO
+	Gate[INDEX](GateInput:=GateInput[INDEX], GateOutput=>GateOutput[INDEX]);
+	GateAccessI[INDEX] := Gate[INDEX];
+END_FOR
+
+FOR INDEX:=1 TO NUM_PROXIMITY BY 1 DO
+	Proximities[INDEX](ProximityInput:=ProximityInput[INDEX]);
+	ProximityAccessI[INDEX] := Proximities[INDEX];
+END_FOR
+
+MachineFlagsAccessI := MachineFlags;
+
+SuperActuator[1] := SpiralAccessI[1];
+SuperActuator[2] := SpiralAccessI[2];
+SuperActuator[3] := ConveyorAccessI[1];
+SuperActuator[4] := ElevatorAccessI[1];
+SuperActuator[5] := MixerAccessI[1];
+SuperActuator[6] := GateAccessI[1];
+SuperActuator[7] := GateAccessI[2];
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mCheckFaults" Id="{7518ce64-a2f7-4f3e-8c13-92d548e0de02}">
+      <Declaration><![CDATA[METHOD PRIVATE mCheckFaults : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO NUM_ACTUATORS BY 1 DO
+	IF SuperActuator[INDEX].mFault() THEN
+	THIS^.MachineFlagsAccessI.pFault:=TRUE;
+	mCheckFaults:=TRUE;
+	RETURN;
+END_IF	
+END_FOR
+
+MachineFlagsAccessI.pFault:=FALSE;
+mCheckFaults:=FALSE;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mGeneralShutDown" Id="{3b7f0aed-dc49-45e7-851c-b90ea522762b}">
+      <Declaration><![CDATA[METHOD PRIVATE mGeneralShutDown : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO NUM_ACTUATORS BY 1 DO
+	SuperActuator[INDEX].mAutoOff();
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mManualMode" Id="{19283be3-08e2-4371-8147-2a0e275ca6b3}">
+      <Declaration><![CDATA[METHOD PRIVATE mManualMode : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO NUM_ACTUATORS BY 1 DO
+	SuperActuator[INDEX].mManual();	
+END_FOR
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mRestoreStatus" Id="{b21dc058-c912-433a-9c37-5926e0fb2553}">
+      <Declaration><![CDATA[METHOD PRIVATE mRestoreStatus : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO NUM_ACTUATORS BY 1 DO
+	IF LastStatus[INDEX] = TRUE THEN
+		SuperActuator[INDEX].mAutoOn();
+	END_IF
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mSaveActuatorsStatus" Id="{a989657e-870a-4162-add9-f3f8202b07e1}">
+      <Declaration><![CDATA[METHOD PRIVATE mSaveActuatorsStatus : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO NUM_ACTUATORS BY 1 DO
+	LastStatus[INDEX]:=SuperActuator[INDEX].mRunning();
+END_FOR]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="pIndependentStateIndex" Id="{92485c67-d122-41a0-8b6d-0aac9f1991a3}">
+      <Declaration><![CDATA[PROPERTY pIndependentStateIndex : INT]]></Declaration>
+      <Get Name="Get" Id="{ebe3fb13-22d1-4531-92e3-c2f780d76a42}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pIndependentStateIndex := IndependentStateIndex;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{d0c40b9f-5798-4f98-ac5c-9d2eb8e78433}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IndependentStateIndex := pIndependentStateIndex;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pNUM_SILOS" Id="{34c0bbc0-0a1b-433f-b1e7-e3659b3457e8}">
+      <Declaration><![CDATA[PROPERTY pNUM_SILOS : INT]]></Declaration>
+      <Get Name="Get" Id="{3190311c-08ff-4d2b-8c26-4c0fa087cb22}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pNUM_SILOS := NUM_SILOS;]]></ST>
+        </Implementation>
+      </Get>
+    </Property>
+    <Property Name="pStateIndex" Id="{e1494542-289d-48ef-90f4-e8a3832a0a8d}">
+      <Declaration><![CDATA[PROPERTY pStateIndex : INT]]></Declaration>
+      <Get Name="Get" Id="{605bdec1-ba25-4a3f-a238-c8d811911681}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pStateIndex := StateIndex;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{a98c1d51-261c-44ce-8d40-4696d256c543}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[StateIndex := pStateIndex;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Method Name="StatesMap" Id="{35b2dfd6-6f2d-4434-abed-46ba1bb91163}">
+      <Declaration><![CDATA[METHOD PRIVATE StatesMap : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Execute[1]:=Guard;
+Execute[2]:=Convey;
+Execute[3]:=DoseInitialize;
+Execute[4]:=DoseBegin;
+Execute[5]:=Buffer;
+Execute[6]:=MixerCheck;
+Execute[7]:=GateActuate;
+Execute[8]:=Mix;
+Execute[9]:=GateActuate;
+
+Execute_Independent[1]:=Store;
+
+CASE pStateIndex OF
+	4:
+	Buffer.mStateInit(BufferingTime:=T#8S);
+	5:
+	GateActuate.mStateInit(GateTime:=T#10S, GateNumber:=1);
+	6:
+	Mix.mStateInit(MixingTime:=T#15S);
+	7:
+	GateActuate.mStateInit(GateTime:=T#15S, GateNumber:=2);
+END_CASE]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Wrapper">
+      <LineId Id="277" Count="2" />
+      <LineId Id="299" Count="0" />
+      <LineId Id="293" Count="0" />
+      <LineId Id="300" Count="1" />
+      <LineId Id="294" Count="0" />
+      <LineId Id="302" Count="0" />
+      <LineId Id="304" Count="0" />
+      <LineId Id="303" Count="0" />
+      <LineId Id="306" Count="0" />
+      <LineId Id="305" Count="0" />
+      <LineId Id="307" Count="1" />
+      <LineId Id="310" Count="0" />
+      <LineId Id="309" Count="0" />
+      <LineId Id="281" Count="4" />
+      <LineId Id="201" Count="0" />
+      <LineId Id="313" Count="0" />
+      <LineId Id="311" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.Map">
+      <LineId Id="6" Count="3" />
+      <LineId Id="51" Count="0" />
+      <LineId Id="50" Count="0" />
+      <LineId Id="49" Count="0" />
+      <LineId Id="10" Count="18" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="53" Count="0" />
+      <LineId Id="31" Count="2" />
+      <LineId Id="52" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="46" Count="0" />
+      <LineId Id="45" Count="0" />
+      <LineId Id="36" Count="0" />
+      <LineId Id="35" Count="0" />
+      <LineId Id="38" Count="0" />
+      <LineId Id="37" Count="0" />
+      <LineId Id="44" Count="0" />
+      <LineId Id="40" Count="0" />
+      <LineId Id="39" Count="0" />
+      <LineId Id="41" Count="0" />
+      <LineId Id="43" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.mCheckFaults">
+      <LineId Id="16" Count="5" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="24" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.mGeneralShutDown">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="Wrapper.mManualMode">
+      <LineId Id="6" Count="2" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.mRestoreStatus">
+      <LineId Id="5" Count="1" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.mSaveActuatorsStatus">
+      <LineId Id="5" Count="2" />
+    </LineIds>
+    <LineIds Name="Wrapper.pIndependentStateIndex.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.pIndependentStateIndex.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.pNUM_SILOS.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.pStateIndex.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.pStateIndex.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="Wrapper.StatesMap">
+      <LineId Id="11" Count="0" />
+      <LineId Id="34" Count="0" />
+      <LineId Id="12" Count="2" />
+      <LineId Id="33" Count="0" />
+      <LineId Id="15" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="32" Count="0" />
+      <LineId Id="31" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="22" Count="0" />
+      <LineId Id="27" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="28" Count="0" />
+      <LineId Id="25" Count="0" />
+      <LineId Id="29" Count="0" />
+      <LineId Id="26" Count="0" />
+      <LineId Id="30" Count="0" />
+      <LineId Id="23" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

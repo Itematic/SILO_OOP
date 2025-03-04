@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="LoadCell" Id="{57e1b19f-4784-4442-b316-20a78cd83725}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK LoadCell
+VAR_INPUT
+	LoadCellInput : LoadCellI;
+END_VAR
+VAR_OUTPUT
+	LoadCellOutput : LoadCellO;
+END_VAR
+VAR
+	ScaleComp : itfScaleAnalogInputImplement;
+	Scale : itfScale;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Map();
+Scale.mScale();]]></ST>
+    </Implementation>
+    <Method Name="Map" Id="{7a545051-e34e-40a3-82c2-e64eeaf805cb}">
+      <Declaration><![CDATA[METHOD PRIVATE Map : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Scale := ScaleComp;
+Scale.pAnalogSignal := LoadCellInput.AnalogSignal;
+Scale.pMaxSignalValue := LoadCellInput.MaxSignalValue;
+Scale.pMaxUnitValue := LoadCellInput.MaxUnitValue;
+
+LoadCellOutput.ScaledValue :=Scale.pScaledSignal;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="LoadCell">
+      <LineId Id="9" Count="0" />
+      <LineId Id="14" Count="0" />
+    </LineIds>
+    <LineIds Name="LoadCell.Map">
+      <LineId Id="10" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

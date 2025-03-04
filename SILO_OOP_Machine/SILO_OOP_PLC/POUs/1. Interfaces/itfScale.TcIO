@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfScale" Id="{dde49b6b-a7ba-4a12-8bdd-e88ae290e95f}">
+    <Declaration><![CDATA[INTERFACE itfScale
+]]></Declaration>
+    <Method Name="mScale" Id="{b8b034f4-be24-470c-9904-5df46717c742}">
+      <Declaration><![CDATA[METHOD mScale : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="pAnalogSignal" Id="{2b180f88-25ae-4af5-b831-0b2d77ff24d5}">
+      <Declaration><![CDATA[PROPERTY pAnalogSignal : INT]]></Declaration>
+      <Get Name="Get" Id="{e9e69682-c556-4fa0-92b4-9762709e6040}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{dd4d643d-a3aa-4343-9dc2-0bce8b1d96e0}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pMaxSignalValue" Id="{29a7785c-73ef-4992-a140-a9f8bc24bc0e}">
+      <Declaration><![CDATA[PROPERTY pMaxSignalValue : INT]]></Declaration>
+      <Get Name="Get" Id="{4e594e15-cac1-424d-8e96-fe4170a64aa3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{a6838618-e2f7-406a-9e1f-1ced1df38344}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pMaxUnitValue" Id="{05a02cc9-6753-4eeb-b32d-4b8e79fc4c0c}">
+      <Declaration><![CDATA[PROPERTY pMaxUnitValue : INT]]></Declaration>
+      <Get Name="Get" Id="{cf7cb978-66d8-42f7-973c-c6db4faeff04}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{d9df3410-9177-4bd5-8531-277217d38c54}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pScaledSignal" Id="{c24106c5-7153-44d8-9d0f-3faffabfaabd}">
+      <Declaration><![CDATA[PROPERTY pScaledSignal : INT]]></Declaration>
+      <Get Name="Get" Id="{c7f59130-986a-46a6-9334-44837a2cbf88}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b350ad28-7e31-4242-827a-533d102870c4}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

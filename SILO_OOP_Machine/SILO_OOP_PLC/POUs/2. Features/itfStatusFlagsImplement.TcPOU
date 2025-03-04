@@ -1,0 +1,215 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfStatusFlagsImplement" Id="{b4afa069-e6e8-4aac-9778-c5758541973e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfStatusFlagsImplement IMPLEMENTS itfStatusFlags
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Buffering : BOOL;
+	Dosing : BOOL;
+	Fault : BOOL;
+	HaltBatch : BOOL;
+	Mixing : BOOL;
+	Storing : BOOL;
+	LowProduct : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="pBuffering" Id="{6ef13a59-15c8-415f-a35e-1c2f9592531a}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pBuffering : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{9e5e72d9-d24c-45f8-9945-8bf0c0360e61}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pBuffering := Buffering;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{fef71d4d-2123-4605-b8e8-786f3ee8ca04}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Buffering := pBuffering;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pDosing" Id="{f5c379a8-e972-4625-aab4-371a51893e76}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pDosing : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{a1bc8ab2-e837-4b9f-954a-b22bacee030d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pDosing := Dosing;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{9d3b5002-40fc-4202-bfb2-8f20995ff8b1}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Dosing := pDosing;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pFault" Id="{c99e1cf4-ad15-4a82-a27e-87ea2b59b061}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pFault : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{70134aeb-5305-48ee-af8e-e485f2eb4f53}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pFault := Fault;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{008214f4-1307-4532-a4af-45b13005caa8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Fault := pFault;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pHaltBatch" Id="{7e020721-f19f-46d5-8731-ff3a64d1b57e}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pHaltBatch : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{c34c1fae-6c2f-4567-920c-9693936463d8}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pHaltBatch := HaltBatch;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{655a4ea4-fb05-41d0-836f-ee044658321a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[HaltBatch := pHaltBatch;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pLowProduct" Id="{9bb1f0e4-640f-4829-b516-d76094ad5eb3}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pLowProduct : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{c8648b14-02c6-45ca-9425-ce0772b3c90f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pLowProduct := LowProduct;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{5c689d97-ddb5-464a-a69c-338a054533c4}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LowProduct := pLowProduct;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pMixing" Id="{8fde8687-0c07-4a21-9b35-9462bbde35a1}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pMixing : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{d015fff5-e404-441c-9e04-b6142a66232f}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pMixing := Mixing;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{6d3ecc67-0300-408c-9ec4-126edff54f97}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Mixing := pMixing;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pStoring" Id="{4d77a9a7-f347-4ac4-a52c-94a95f954e73}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pStoring : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{282f82d1-4822-4d99-b873-b68fb6c1f444}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pStoring := Storing;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{3803e5a8-5dfb-4b17-beb3-e18c30b1e95d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Storing := pStoring;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfStatusFlagsImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pBuffering.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pBuffering.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pDosing.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pDosing.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pFault.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pFault.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pHaltBatch.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pHaltBatch.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pLowProduct.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pLowProduct.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pMixing.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pMixing.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pStoring.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfStatusFlagsImplement.pStoring.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

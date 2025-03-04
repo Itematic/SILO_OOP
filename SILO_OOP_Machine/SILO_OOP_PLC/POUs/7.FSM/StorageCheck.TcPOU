@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="StorageCheck" Id="{6076dd4b-b718-4000-8d1e-da635a5ab1bc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK StorageCheck EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{04ffb899-1689-4284-a319-0b6a9303f921}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF BasePointer^.ProximityAccessI[1].mReturnBOOL() THEN
+	BasePointer^.MachineFlagsAccessI.pBuffering := TRUE;
+	ELSE
+		BasePointer^.MachineFlagsAccessI.pBuffering := FALSE;
+END_IF
+
+IF BasePointer^.ProximityAccessI[2].mReturnBOOL() THEN
+	BasePointer^.MachineFlagsAccessI.pStoring := TRUE;
+	ELSE
+		BasePointer^.MachineFlagsAccessI.pStoring := FALSE;
+END_IF
+
+FOR INDEX:=1 TO BasePointer^.pNUM_SILOS BY 1 DO
+	IF BasePointer^.SiloFlagsAccessI[INDEX].pLowProduct THEN
+		BasePointer^.MachineFlagsAccessI.pLowProduct:=TRUE;
+		EXIT;
+	END_IF
+	TESTING := 5;
+END_FOR
+
+]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="StorageCheck">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="StorageCheck.mIrun">
+      <LineId Id="3" Count="1" />
+      <LineId Id="10" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="2" />
+      <LineId Id="13" Count="1" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="15" Count="0" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="19" Count="0" />
+      <LineId Id="21" Count="0" />
+      <LineId Id="20" Count="0" />
+      <LineId Id="24" Count="0" />
+      <LineId Id="18" Count="0" />
+      <LineId Id="23" Count="0" />
+      <LineId Id="22" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

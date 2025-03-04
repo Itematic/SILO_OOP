@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Dose" Id="{8405d10d-04a9-46b9-8c78-5923b7eebde8}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Dose EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{c11768bf-33f0-4646-8168-4155e99f20eb}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[FOR INDEX:=1 TO BasePointer^.pNUM_SILOS BY 1 DO
+	IF BasePointer^.SiloFlagsAccessI[INDEX].pBufferedWeight - BasePointer^.LoadCellOutput[INDEX].ScaledValue >= BasePointer^.SiloFlagsAccessI[INDEX].pTargetWeight THEN
+		BasePointer^.SpiralAccessI[INDEX].mAutoOff();
+	END_IF
+END_FOR
+
+IF mCheckDosing() = TRUE THEN
+	BasePointer^.MachineFlagsAccessI.pDosing := FALSE;
+	ELSE
+		RETURN;
+END_IF
+
+mNextState();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Dose">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Dose.mIrun">
+      <LineId Id="3" Count="1" />
+      <LineId Id="7" Count="1" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="11" Count="0" />
+      <LineId Id="13" Count="2" />
+      <LineId Id="17" Count="0" />
+      <LineId Id="16" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

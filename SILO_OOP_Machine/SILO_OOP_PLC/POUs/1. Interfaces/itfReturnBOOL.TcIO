@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfReturnBOOL" Id="{513d6cf9-29a0-43a0-bab1-6f6a1dbb844a}">
+    <Declaration><![CDATA[INTERFACE itfReturnBOOL
+]]></Declaration>
+    <Method Name="mReturnBOOL" Id="{81f6894f-c01b-46a3-a322-b598b865c488}">
+      <Declaration><![CDATA[METHOD mReturnBOOL : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+  </Itf>
+</TcPlcObject>

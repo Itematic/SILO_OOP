@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfDetectImplement" Id="{188124eb-46d1-43ca-a6ab-cdd97081cc06}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfDetectImplement IMPLEMENTS itfDetect
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	DetectSignal : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="pDetectSignal" Id="{b8b58071-26a9-4759-a020-388c05ae4184}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pDetectSignal : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{a517cb68-b173-4cb0-b937-6d0a8a9b325b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pDetectSignal := DetectSignal;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{81d31114-a1cd-464b-b8da-a948783a30ab}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[DetectSignal := pDetectSignal;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfDetectImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfDetectImplement.pDetectSignal.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfDetectImplement.pDetectSignal.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

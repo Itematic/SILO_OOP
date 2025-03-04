@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="MAIN" Id="{5dba1090-6766-485f-90ea-1f2685b335f5}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	Machine1: Wrapper;
+	SpiralInput: ARRAY [1..NUM_SILOS] OF VFDI := [(InputFreq := 50, RampRate := 15, FreqMaxSignal := 200), (InputFreq := 45, RampRate := 20, FreqMaxSignal := 200)];
+	LoadCellInput: ARRAY [1..NUM_SILOS] OF LoadCellI := [(AnalogSignal := 4000, MaxSignalValue := 10000, MaxUnitValue := 5000), (AnalogSignal := 3000, MaxSignalValue := 10000, MaxUnitValue := 5000)];
+	ConveyorInput: ARRAY [1..NUM_CONVEYORS] OF MotorI;
+	ElevatorInput: ARRAY [1..NUM_ELEVATORS] OF MotorI;
+	MixerInput: ARRAY [1..NUM_MIXERS] OF VFDI;
+	GateInput: ARRAY [1..NUM_GATES] OF GateI;
+	ProximityInput: ARRAY [1..NUM_PROXIMITY] OF ProxI;
+	SpiralOutput: ARRAY [1..NUM_SILOS] OF VFDO;
+	LoadCellOutput: ARRAY [1..NUM_SILOS] OF LoadCellO;
+	ConveyorOutput: ARRAY [1..NUM_CONVEYORS] OF MotorO;
+	ElevatorOutput: ARRAY [1..NUM_ELEVATORS] OF MotorO;
+	MixerOutput: ARRAY [1..NUM_MIXERS] OF VFDO;
+	GateOutput: ARRAY [1..NUM_GATES] OF GateO;
+	
+	Buffering : BOOL;
+	Dosing : BOOL;
+	Fault : BOOL;
+	HaltBatch : BOOL;
+	Mixing : BOOL;
+	Sorting : BOOL;
+	
+END_VAR
+VAR CONSTANT
+	NUM_SILOS : INT:=2;
+	NUM_GATES : INT:=2;
+	NUM_CONVEYORS : INT:=1;
+	NUM_ELEVATORS : INT:=1;
+	NUM_PROXIMITY : INT:=4;
+	NUM_MIXERS : INT:=1;
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Machine1(
+	SpiralInput:= SpiralInput , 
+	LoadCellInput:= LoadCellInput, 
+	ConveyorInput:= ConveyorInput, 
+	ElevatorInput:= ElevatorInput, 
+	MixerInput:= MixerInput, 
+	GateInput:= GateInput, 
+	ProximityInput:= ProximityInput, 
+	SpiralOutput=> SpiralOutput, 
+	LoadCellOutput=> LoadCellOutput, 
+	ConveyorOutput=> ConveyorOutput, 
+	ElevatorOutput=> ElevatorOutput, 
+	MixerOutput=> MixerOutput, 
+	GateOutput=> GateOutput);
+
+Machine1.SiloFlagsAccessI[1].pTargetWeight := 50;
+Machine1.SiloFlagsAccessI[2].pTargetWeight := 80;
+	
+Buffering := Machine1.MachineFlagsAccessI.pBuffering;
+Dosing := Machine1.MachineFlagsAccessI.pDosing;
+Fault := Machine1.MachineFlagsAccessI.pFault;
+HaltBatch := Machine1.MachineFlagsAccessI.pHaltBatch;
+Mixing := Machine1.MachineFlagsAccessI.pMixing;
+Sorting := Machine1.MachineFlagsAccessI.pStoring;]]></ST>
+    </Implementation>
+    <LineIds Name="MAIN">
+      <LineId Id="108" Count="7" />
+      <LineId Id="124" Count="4" />
+      <LineId Id="106" Count="0" />
+      <LineId Id="235" Count="1" />
+      <LineId Id="238" Count="0" />
+      <LineId Id="151" Count="0" />
+      <LineId Id="162" Count="0" />
+      <LineId Id="165" Count="3" />
+      <LineId Id="164" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="GateHandler" Id="{fbb228c9-2aa9-4589-8773-a25047d3db88}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK GateHandler EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	InternalGateTime : TIME;
+	InternalGateNumber : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{11921aaf-0c7e-4205-b4ae-86b3c762fae2}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[BasePointer^.GateAccessI[InternalGateNumber].mAutoOn();
+StateTimer(IN:= TRUE, PT:=InternalGateTime);
+IF StateTimer.Q THEN
+	BasePointer^.GateAccessI[InternalGateNumber].mAutoOff();
+	mNextState();
+	StateTimer(IN:= FALSE);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mStateInit" Id="{3089b3ed-5b88-4954-9671-d016071c80bf}">
+      <Declaration><![CDATA[METHOD mStateInit : BOOL
+VAR_INPUT
+	GateTime : TIME;
+	GateNumber : INT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InternalGateTime := GateTime;
+InternalGateNumber := GateNumber;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="GateHandler">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="GateHandler.mIrun">
+      <LineId Id="3" Count="3" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="GateHandler.mStateInit">
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

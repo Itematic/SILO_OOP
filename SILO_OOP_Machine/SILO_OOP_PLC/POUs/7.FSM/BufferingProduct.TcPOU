@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="BufferingProduct" Id="{8d0817e2-d07d-421a-bf5d-fec26434d4cc}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK BufferingProduct EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	InternalBufferingTime : TIME;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{c0be4efb-a317-4090-b5d3-b2693ed7b2fa}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF BasePointer^.ProximityAccessI[1].mReturnBOOL() THEN;
+	IF mCheckDosing() THEN
+		StateTimer(IN:= TRUE, PT:=InternalBufferingTime);
+		IF StateTimer.Q = TRUE THEN
+			mNextState();
+			StateTimer(IN:= FALSE);
+//		ELSE
+//			RETURN;
+		END_IF
+	END_IF
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mStateInit" Id="{af1c1d9c-0dfe-461d-9f63-9f99d82bfff5}">
+      <Declaration><![CDATA[METHOD mStateInit : BOOL
+VAR_INPUT
+	BufferingTime : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InternalBufferingTime := BufferingTime;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="BufferingProduct">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="BufferingProduct.mIrun">
+      <LineId Id="3" Count="1" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="8" Count="1" />
+      <LineId Id="16" Count="0" />
+      <LineId Id="12" Count="1" />
+      <LineId Id="10" Count="0" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="BufferingProduct.mStateInit">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

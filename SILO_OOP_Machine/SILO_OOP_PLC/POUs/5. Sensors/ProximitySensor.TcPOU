@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ProximitySensor" Id="{be2ea9f6-e576-4728-885a-0a0a2bb3dc3a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ProximitySensor IMPLEMENTS itfReturnBOOL
+VAR_INPUT
+	ProximityInput : ProxI;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	ProxComp : itfDetectImplement;
+	Prox : itfDetect;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[Map();]]></ST>
+    </Implementation>
+    <Method Name="Map" Id="{dd0a1b0c-8f44-4b93-867d-2b667834846a}">
+      <Declaration><![CDATA[METHOD PRIVATE Map : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[Prox := ProxComp;
+Prox.pDetectSignal := ProximityInput.Signal;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mReturnBOOL" Id="{2187815a-a0d5-490d-b1bc-d514041daf77}">
+      <Declaration><![CDATA[{warning 'add method implementation '}
+METHOD mReturnBOOL : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mReturnBOOL := Prox.pDetectSignal;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ProximitySensor">
+      <LineId Id="21" Count="0" />
+    </LineIds>
+    <LineIds Name="ProximitySensor.Map">
+      <LineId Id="7" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="ProximitySensor.mReturnBOOL">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

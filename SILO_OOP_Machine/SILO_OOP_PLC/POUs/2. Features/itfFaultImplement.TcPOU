@@ -1,0 +1,132 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfFaultImplement" Id="{dfdfd176-5bd6-4f72-8fd3-00022ebdd54e}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfFaultImplement IMPLEMENTS itfFault
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	Fault : BOOL;
+	FaultStatus : BOOL;
+	ResetButton : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mResetFault" Id="{757934de-235a-4d3e-9eb8-5f1ed5701c96}">
+      <Declaration><![CDATA[METHOD mResetFault : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pResetButton AND NOT pFault THEN
+	pFaultStatus := FALSE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mSetFault" Id="{6d3e00e7-868d-4867-928d-29bb036ebb3b}">
+      <Declaration><![CDATA[METHOD mSetFault : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF pFault THEN
+	pFaultStatus := TRUE;
+	mSetFault := TRUE;
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="pFault" Id="{3655657d-3612-4f67-ba48-f9919ea50c98}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pFault : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{8f227655-6bd7-4a33-b4b9-6d0b12a41b7c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pFault := Fault;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{500ce595-0f78-4e1d-9349-766ea73d8556}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[Fault := pFault;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pFaultStatus" Id="{afd11c66-758b-4df2-90a9-4dc789d23088}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pFaultStatus : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{0f8f9fa4-e21a-47c8-8155-e980d77e9868}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pFaultStatus := FaultStatus;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{bcb3c724-9b55-4b0d-be38-b04eb83dfbb2}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[FaultStatus := pFaultStatus;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pResetButton" Id="{19908a86-5193-46bc-af8c-62a2c2eac597}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pResetButton : BOOL
+]]></Declaration>
+      <Get Name="Get" Id="{e51af41c-1455-4bf3-8215-78f1a51a8131}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pResetButton := ResetButton;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{61366bac-4426-4eb7-bf92-b4a46a75cdc0}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ResetButton := pResetButton;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfFaultImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.mResetFault">
+      <LineId Id="4" Count="2" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.mSetFault">
+      <LineId Id="4" Count="1" />
+      <LineId Id="7" Count="0" />
+      <LineId Id="6" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.pFault.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.pFault.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.pFaultStatus.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.pFaultStatus.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.pResetButton.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfFaultImplement.pResetButton.Set">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

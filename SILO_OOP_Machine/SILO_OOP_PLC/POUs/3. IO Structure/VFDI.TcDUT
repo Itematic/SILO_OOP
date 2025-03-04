@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <DUT Name="VFDI" Id="{24a5297a-8ddf-4152-973c-2fa5840a1f61}">
+    <Declaration><![CDATA[TYPE VFDI EXTENDS MotorI :
+STRUCT
+	InputFreq : INT;
+	RampRate : INT;
+	FreqMaxSignal : INT;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

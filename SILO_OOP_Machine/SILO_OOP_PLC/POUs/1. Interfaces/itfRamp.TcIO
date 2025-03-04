@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfRamp" Id="{9c07f5d6-b19d-4f49-90ce-c8eedf795b2b}">
+    <Declaration><![CDATA[INTERFACE itfRamp
+]]></Declaration>
+    <Method Name="mDoneTargetFreq" Id="{cf8c4a42-0db0-4b51-8eee-b8861be32206}">
+      <Declaration><![CDATA[METHOD mDoneTargetFreq : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mRampDown" Id="{b39f4cd6-bde0-4696-8603-789194e69eab}">
+      <Declaration><![CDATA[METHOD mRampDown : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mRampUp" Id="{72770504-fe99-40aa-9dd4-0c0a11590e78}">
+      <Declaration><![CDATA[METHOD mRampUp : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mTimerScale" Id="{71775c50-ec94-41af-bf65-de004a634d6e}">
+      <Declaration><![CDATA[METHOD mTimerScale : INT
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="pOutputValue" Id="{0d645695-eeca-4ba5-8299-0ade6bee42ea}">
+      <Declaration><![CDATA[PROPERTY pOutputValue : INT]]></Declaration>
+      <Get Name="Get" Id="{27701c3f-84d0-43a5-906c-1937699fe991}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{7386edcc-3e90-43cb-b00e-6143fb45bc7f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pPulsePeriod" Id="{c98c7192-ebdb-41b0-84ec-9523c9574a33}">
+      <Declaration><![CDATA[PROPERTY pPulsePeriod : INT]]></Declaration>
+      <Get Name="Get" Id="{83a7f7f9-8038-4c8f-aadd-08878d7cb73f}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{a415b74b-2bba-43c2-b5ae-1dfccac726de}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pRampDone" Id="{e7da82f0-7555-4056-b8ae-a54c6b576f96}">
+      <Declaration><![CDATA[PROPERTY pRampDone : BOOL]]></Declaration>
+      <Get Name="Get" Id="{f3126050-addd-4a43-999d-4f086caa710e}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{ea3c529c-d70a-42bf-982f-275db74eefec}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pRampRate" Id="{43625702-126b-4363-952d-3d2f4511883f}">
+      <Declaration><![CDATA[PROPERTY pRampRate : INT]]></Declaration>
+      <Get Name="Get" Id="{758769ce-e102-4027-93db-1872eb7580e3}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{127204e0-c2a0-41bd-9207-6bb9f2670922}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pTargetFreq" Id="{e019d5a9-978e-4221-8b62-5cde2e229513}">
+      <Declaration><![CDATA[PROPERTY pTargetFreq : INT]]></Declaration>
+      <Get Name="Get" Id="{2378e14d-6860-4f21-928b-8f7fdd6b3440}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{a0db188a-d06f-4979-bdc6-47406ceebf2c}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <Itf Name="itfActuate" Id="{c27dcbc9-0a44-4669-9d91-356bb6a085b8}">
+    <Declaration><![CDATA[INTERFACE itfActuate
+]]></Declaration>
+    <Method Name="mTurnOffAuto" Id="{11785087-ff94-402d-92d0-da83ce6aa0a9}">
+      <Declaration><![CDATA[METHOD mTurnOffAuto : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mTurnOffManual" Id="{915c598e-e075-4fe6-a9db-78c85df4f985}">
+      <Declaration><![CDATA[METHOD mTurnOffManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mTurnOnAuto" Id="{4d358000-52e8-4f72-a58a-e5e326555f83}">
+      <Declaration><![CDATA[METHOD mTurnOnAuto : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Method Name="mTurnOnManual" Id="{06d9b11e-9a2a-4bf1-a6e2-f2f711951ae0}">
+      <Declaration><![CDATA[METHOD mTurnOnManual : BOOL
+VAR_INPUT
+END_VAR
+]]></Declaration>
+    </Method>
+    <Property Name="pCoil" Id="{f8e9c5d9-6d59-404a-8c24-9242cb1e5395}">
+      <Declaration><![CDATA[PROPERTY pCoil : Bool]]></Declaration>
+      <Get Name="Get" Id="{755145f7-d13b-4442-8ea6-3b290e7993ff}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{e900090f-35ce-452f-a9f1-a775a3fb26ec}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pStart" Id="{a1af4811-f7c9-4081-b328-459541259638}">
+      <Declaration><![CDATA[PROPERTY pStart : Bool]]></Declaration>
+      <Get Name="Get" Id="{5906180f-bb6c-4635-a64f-40dc50e81fb2}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{b7dd49f8-f8f4-4a4b-8e8c-a5510b1f3fdd}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+    <Property Name="pStop" Id="{34f9b22d-fdc5-4373-9d58-2864878d6f10}">
+      <Declaration><![CDATA[PROPERTY pStop : Bool]]></Declaration>
+      <Get Name="Get" Id="{6fbea6b1-7592-4268-9fa7-ef9ac49f96c1}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Get>
+      <Set Name="Set" Id="{0b8b9186-9983-422b-9162-694e5012e86b}">
+        <Declaration><![CDATA[]]></Declaration>
+      </Set>
+    </Property>
+  </Itf>
+</TcPlcObject>

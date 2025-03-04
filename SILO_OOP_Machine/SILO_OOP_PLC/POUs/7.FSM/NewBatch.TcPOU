@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="NewBatch" Id="{5cf4f6aa-ca64-4d77-a407-cbbaafb258d5}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK NewBatch EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{dc1f69bf-216a-4a80-a7cb-a8fb864039d2}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[IF BasePointer^.MachineFlagsAccessI.pBuffering = TRUE THEN
+	BasePointer^.MachineFlagsAccessI.pHaltBatch := TRUE;
+ELSE
+	BasePointer^.MachineFlagsAccessI.pHaltBatch := FALSE;
+	mNextState();	
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="NewBatch">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="NewBatch.mIrun">
+      <LineId Id="3" Count="1" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

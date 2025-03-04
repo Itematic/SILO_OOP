@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="ConveyProduct" Id="{6d99734e-050e-41c2-8b96-5f9a09ed2639}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK ConveyProduct EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{390f3587-73bf-4de4-a32b-a10269890d34}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[BasePointer^.ConveyorAccessI[1].mAutoOn();
+BasePointer^.ElevatorAccessI[1].mAutoOn();
+BasePointer^.MixerAccessI[1].mAutoOn();
+mNextState();]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="ConveyProduct">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="ConveyProduct.mIrun">
+      <LineId Id="3" Count="3" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

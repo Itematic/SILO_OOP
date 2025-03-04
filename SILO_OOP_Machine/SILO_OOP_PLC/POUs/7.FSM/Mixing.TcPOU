@@ -1,0 +1,55 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="Mixing" Id="{7c986a47-0b45-4a7c-91ca-7ac3ed8c508a}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK Mixing EXTENDS BaseState
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	InternalMixingTime : TIME;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mIrun" Id="{399c1e34-8270-4677-a09c-a2fe7c8983ec}">
+      <Declaration><![CDATA[METHOD mIrun : BOOL
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[StateTimer(IN:=TRUE, PT:=InternalMixingTime);
+BasePointer^.MachineFlagsAccessI.pMixing := TRUE;
+IF StateTimer.Q THEN
+	mNextState();
+	BasePointer^.MachineFlagsAccessI.pMixing := FALSE;
+	StateTimer(IN:=FALSE);
+END_IF]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mStateInit" Id="{a9c3c502-1ea6-48c7-a6be-b40ac9c75059}">
+      <Declaration><![CDATA[METHOD mStateInit : BOOL
+VAR_INPUT
+	MixingTime : TIME;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[InternalMixingTime := MixingTime;]]></ST>
+      </Implementation>
+    </Method>
+    <LineIds Name="Mixing">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="Mixing.mIrun">
+      <LineId Id="3" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="4" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="9" Count="0" />
+      <LineId Id="8" Count="0" />
+      <LineId Id="7" Count="0" />
+    </LineIds>
+    <LineIds Name="Mixing.mStateInit">
+      <LineId Id="5" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

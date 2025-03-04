@@ -1,0 +1,99 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfSiloFlagsImplement" Id="{af06416b-427c-4726-bd66-35bcaaba74aa}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfSiloFlagsImplement IMPLEMENTS itfSiloFlags
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	BufferedWeight : INT;
+	TargetWeight : INT;
+	LowProduct : BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Property Name="pBufferedWeight" Id="{4e254db4-469e-4979-8d38-bbc3faae0de8}">
+      <Declaration><![CDATA[PROPERTY pBufferedWeight : INT
+]]></Declaration>
+      <Get Name="Get" Id="{d54c17c5-ee5d-495c-bfef-08e3ae8dee9b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pBufferedWeight := BufferedWeight;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{025e1951-af4c-4ce0-8a16-89ff8429ec3d}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[BufferedWeight := pBufferedWeight;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pLowProduct" Id="{045b3077-0c46-417a-853e-07c04eccd9ff}">
+      <Declaration><![CDATA[PROPERTY pLowProduct : BOOL]]></Declaration>
+      <Get Name="Get" Id="{69a24c10-c685-4f76-b51a-0b92b9009b3b}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pLowProduct := LowProduct;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{8822b374-3d17-490f-946c-0774939e8909}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[LowProduct := pLowProduct;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pTargetWeight" Id="{79142096-4691-4fd4-95ed-b86c4d44b986}">
+      <Declaration><![CDATA[PROPERTY pTargetWeight : INT
+]]></Declaration>
+      <Get Name="Get" Id="{bec8d8a7-dd59-424a-aaaa-6b5fdd9349dd}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pTargetWeight := TargetWeight;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{601e31e7-a6e0-47fa-b27f-9219ac54f66c}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[TargetWeight := pTargetWeight;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfSiloFlagsImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfSiloFlagsImplement.pBufferedWeight.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfSiloFlagsImplement.pBufferedWeight.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfSiloFlagsImplement.pLowProduct.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfSiloFlagsImplement.pLowProduct.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfSiloFlagsImplement.pTargetWeight.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfSiloFlagsImplement.pTargetWeight.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>

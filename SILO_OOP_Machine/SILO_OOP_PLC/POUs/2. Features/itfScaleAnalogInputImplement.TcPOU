@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4024.12">
+  <POU Name="itfScaleAnalogInputImplement" Id="{bd743808-21b2-4b7e-b273-88f12914b8a4}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK itfScaleAnalogInputImplement IMPLEMENTS itfScale
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	AnalogSignal : INT;
+	MaxSignalValue : INT;
+	MaxUnitValue : INT;
+	ScaledSignal : INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mScale" Id="{2cb0b6e4-b52c-44b2-9e28-fff038aec945}">
+      <Declaration><![CDATA[METHOD mScale : INT
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[pScaledSignal := pAnalogSignal * pMaxUnitValue / pMaxSignalValue;]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="pAnalogSignal" Id="{1045c361-c192-48cc-8fc0-a4af165b4924}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pAnalogSignal : INT
+]]></Declaration>
+      <Get Name="Get" Id="{1fe404f1-1b19-4cef-b5b1-afbe582d4781}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pAnalogSignal := AnalogSignal;
+]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{ef2ddb16-9cd6-410a-8338-890e2e6f4414}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[AnalogSignal := pAnalogSignal;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pMaxSignalValue" Id="{7ef7196e-d388-4ad4-9181-4e93c19fa8c0}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pMaxSignalValue : INT
+]]></Declaration>
+      <Get Name="Get" Id="{6b0d6eb1-58d1-4202-aaff-92bba644abe9}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF MaxSignalValue > 0 THEN
+pMaxSignalValue := MaxSignalValue;
+ELSE
+	pMaxSignalValue := 1;
+END_IF]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{06fd741b-1aed-408c-8e0c-25d7bbdde98e}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MaxSignalValue := pMaxSignalValue;
+]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pMaxUnitValue" Id="{a2a01822-13f5-4f2b-84f3-5641ef38feff}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pMaxUnitValue : INT
+]]></Declaration>
+      <Get Name="Get" Id="{ccdaca33-79e2-426c-8075-e8fea82ec24a}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pMaxUnitValue := MaxUnitValue;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e6229e04-6729-46e3-ae36-6618bc1ef302}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[MaxUnitValue := pMaxUnitValue;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="pScaledSignal" Id="{d9a76f2c-a0f4-4965-be34-aca33c93e56a}">
+      <Declaration><![CDATA[{warning 'add property implementation'}
+PROPERTY pScaledSignal : INT
+]]></Declaration>
+      <Get Name="Get" Id="{eba4761e-cc4a-4433-a314-2da91daed415}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[pScaledSignal := ScaledSignal;]]></ST>
+        </Implementation>
+      </Get>
+      <Set Name="Set" Id="{e52c18d4-465d-4f88-ade3-2f828b8dd6cf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[ScaledSignal := pScaledSignal;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <LineIds Name="itfScaleAnalogInputImplement">
+      <LineId Id="9" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.mScale">
+      <LineId Id="4" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pAnalogSignal.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="5" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pAnalogSignal.Set">
+      <LineId Id="5" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pMaxSignalValue.Get">
+      <LineId Id="2" Count="0" />
+      <LineId Id="6" Count="0" />
+      <LineId Id="5" Count="0" />
+      <LineId Id="7" Count="1" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pMaxSignalValue.Set">
+      <LineId Id="5" Count="0" />
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pMaxUnitValue.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pMaxUnitValue.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pScaledSignal.Get">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+    <LineIds Name="itfScaleAnalogInputImplement.pScaledSignal.Set">
+      <LineId Id="2" Count="0" />
+    </LineIds>
+  </POU>
+</TcPlcObject>
